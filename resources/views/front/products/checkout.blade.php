@@ -34,66 +34,60 @@
                                 <h4 class="section-h4 deliveryText">Cek Biaya Pengiriman</h4>
                                
                                 <div id="showdifferent">
-                                    <!-- Form-Fields -->                                  
-                                        <input type="hidden" name="delivery_id">
-                                        <div class="group-inline u-s-m-b-13">
-                                        <div class="group-1 u-s-p-r-16">
-                                                <label for="destination">Provinsi
-                                                </label>
-                                                <div class="select-box-wrapper">
-                                                <select class="select-box" id="destination" name="destination">
-                                                    <option value="">Pilih Provinsi</option>                                                                                       
-                                                    <option value=""></option>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Provinsi</label>
+                                                <div id="box-load-province_id"></div>
+                                                <select class="form-control select2 w-100" id="province_id" disabled="disabled" name="province_id">
+                                                    <option value="" selected disabled>Pilih Provinsi</option>                                                                                       
                                                 </select>  
-                                                </div>                                          
                                             </div>
-                                            <div class="group-1 u-s-p-r-16">
-                                                <label for="destination">Kota
-                                                </label>
-                                                <div class="select-box-wrapper">
-                                                <select class="select-box" id="destination" name="destination">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Kota</label>
+                                                <div id="box-load-city_id"></div>
+                                                <select class="form-control select2 w-100" id="city_id" disabled="disabled" name="city_id">
                                                     <option value="" selected disabled>Pilih Kota</option>                                                                                       
                                                 </select>  
-                                                </div>                                          
-                                            </div>                                                                                     
+                                            </div>
                                         </div>
-                                        <div class="group-inline u-s-m-b-13">
-                                            <div class="group-1 u-s-p-r-16">
-                                                <label for="weight">Berat (gr)
-                                                </label>
-                                                <div class="first-name-extra">
-                                                <input type="text" name="weight" id="weight" class="text-field" value="" readonly="">
-                                                </div>                                            
-                                            </div>   
-                                            <div class="group-1 u-s-p-r-16">
-                                                <label for="courier">Kurir
-                                                </label>
-                                                <div class="select-box-wrapper">
-                                                    <select class="select-box" id="courier" name="courier">
-                                                        <option value="">Pilih Kurir</option>                                               
-                                                        <option value="jne">JNE</option>
-                                                        <option value="Jnt">J&T</option>                                                                                                
-                                                    </select>
-                                                </div>                                            
-                                            </div>                                                                                     
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Kecamatan</label>
+                                                <div id="box-load-subdistrict_id"></div>
+                                                <select class="form-control select2 w-100" id="subdistrict_id"  disabled="disabled" name="subdistrict_id">
+                                                    <option value="" selected disabled>Pilih Kecamatan</option>                                                                                       
+                                                </select>  
+                                            </div>
                                         </div>
-                                        <div class="group-inline u-s-m-b-13">
-                                        <div class="group-2">
-                                                <label for="last-name-extra">Jenis Pengiriman
-                                                </label>
-                                                <div class="select-box-wrapper">
-                                                    <select class="select-box" id="shipping_method" name="shipping_method">
-                                                        <option value="">Pilih Jenis Pengiriman</option>                                               
-                                                    <option value=""></option>                                                
-                                                    </select>
-                                                    <p id="delivery-delivery_country"></p>
-                                                </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="weight">Berat (gr)</label>
+                                                <input disabled="true" type="text" name="weight" class="form-control" style="max-height: 28px !important; text-align: right" id="weight">
+                                            </div>
                                         </div>
-                                        </div>                                                                                                                                                                                                                                                
-                                        <div class="u-s-m-b-13">
-                                            <button style="width:100%;" type="submit" name="cekOngkir" class="button button-outline-secondary">Cek Biaya Kirim</button>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Kurir</label>
+                                                <div id="box-load-kurir"></div>
+                                                <select class="form-control select2 w-100" id="kurir" disabled="disabled" name="kurir">
+                                                    <option value="" selected disabled>Pilih Kurir</option>                                                                                       
+                                                </select>  
+                                            </div>
                                         </div>
-                                    <!-- Form-Fields /- -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Layanan</label>
+                                                <div id="box-load-layanan"></div>
+                                                <select class="form-control select2 w-100" id="layanan" disabled="disabled" name="layanan">
+                                                    <option value="" selected disabled>Pilih Layanan</option>                                                                                       
+                                                </select>  
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 &nbsp;
                                 &nbsp;
@@ -115,7 +109,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @php $total_price = 0 @endphp
+                                        @php 
+                                            $total_price = 0 ;
+                                            $total_weight = 0 ;
+                                        @endphp
                                         @foreach($getCartItems as $item)
                                         <?php $getDiscountAttributePrice = Product::getDiscountAttributePrice($item['product_id'],$item['size']);
                                         ?>
@@ -128,7 +125,10 @@
                                                 <h6 class="order-h6">{{ formatRupiah($getDiscountAttributePrice['final_price'] * $item['quantity']) }}</h6>
                                             </td>
                                         </tr>
-                                        @php $total_price = $total_price + ($getDiscountAttributePrice['final_price'] * $item['quantity']) @endphp
+                                        @php 
+                                            $total_price += ($getDiscountAttributePrice['final_price'] * $item['quantity']);
+                                            $total_weight += ((float)$item['weight'] * (float)$item['quantity']) ;
+                                        @endphp
                                         @endforeach
                                         <tr>
                                             <td>
@@ -163,7 +163,7 @@
                                                 <h3 class="order-h3">Grand Total</h3>
                                             </td>
                                             <td>
-                                                <h3 class="order-h3">{{ formatRupiah($total_price - Session::get('couponAmount')) }}</h3>
+                                                <h3 class="order-h3" id="total-text">{{ formatRupiah($total_price - Session::get('couponAmount')) }}</h3>
                                                 <input type="hidden" name="shipping_cost" id="shipping_cost" >
                                             </td>
                                         </tr>
@@ -181,5 +181,206 @@
     </div>
 </div>
 <!-- Checkout-Page /- -->
+@endsection
+@section('script')
+<link rel="stylesheet" href="{{ asset('/css/select2.min.css') }}"/>
+<script type="text/javascript" src="{{ asset('/js/select2.min.js') }}"></script>
+<script>
+    let berat = "{{ @$total_weight ?? 0 }}";
+    let total_price = "{{ @$total_price ?? 0 }}";
+    let total_voc = "{{ @Session::get('couponAmount') ?? 0 }}";
+    let fix_cost = 0
+    $(document).ready(function() {
+        $('.select2').select2();
+        loadProv();
+        setTimeout(() => {
+            $('#weight').val(berat);
+        }, 500);
+    });
+    function loadProv() {
+        const key = 'province_id'
+        const name = 'province'
+        $.ajax({
+            url: `{{ url('/ongkir/provinces') }}`,
+            type: 'GET',
+            dataType: 'json', 
+            beforeSend: function() {
+                $('#'+key).prop('disabled', true);
+                $('#box-load-'+key).html('memuat data...');
+            },
+            success: function(response) {
+                setDataSelect(response, key, name);
+                $('#'+key).prop('disabled', false);
+                $('#box-load-'+key).hide();
+            },
+            error: function(xhr, status, error) {
+                console.error(status + ': ' + error);
+            }
+        });
+    }
+    // prov change
+    $('#province_id').change(function() {
+        const val = $(this).val();
+        loadCity(val);
+    });
 
+    function loadCity(id) {
+        const key = 'city_id'
+        const name = 'city_name'
+        const name_id = 'city'
+        $.ajax({
+            url: `{{ url('/ongkir/cities') }}/`+id,
+            type: 'GET',
+            dataType: 'json', 
+            beforeSend: function() {
+                $('#'+key).prop('disabled', true);
+                $('#box-load-'+key).html('memuat data...');
+            },
+            success: function(response) {
+                setDataSelect(response, key, name,name_id);
+                $('#'+key).prop('disabled', false);
+                $('#box-load-'+key).hide();
+            },
+            error: function(xhr, status, error) {
+                console.error(status + ': ' + error);
+            }
+        });
+    }
+    // city change
+    $('#city_id').change(function() {
+        const val = $(this).val();
+        loadDistrict(val);
+    });
+
+    function loadDistrict(id) {
+        const key = 'subdistrict_id'
+        const name = 'subdistrict_name'
+        const name_id = 'subdistrict'
+        $.ajax({
+            url: `{{ url('/ongkir/districts') }}/`+id,
+            type: 'GET',
+            dataType: 'json', 
+            beforeSend: function() {
+                $('#'+key).prop('disabled', true);
+                $('#box-load-'+key).html('memuat data...');
+            },
+            success: function(response) {
+                setDataSelect(response, key, name, name_id);
+                $('#'+key).prop('disabled', false);
+                $('#box-load-'+key).hide();
+            },
+            error: function(xhr, status, error) {
+                console.error(status + ': ' + error);
+            }
+        });
+    }
+
+    // subdistrict change
+    $('#subdistrict_id').change(function() {
+        loadKurir();
+    });
+
+    function loadKurir() {
+        const key = 'kurir'
+        $('#'+key).prop('disabled', true);
+        $('#box-load-'+key).html('memuat data...');
+        const data = [
+            {
+                'kurir_id' : 'jnt',
+                'kurir' : 'JNT'
+            },
+            {
+                'kurir_id' : 'jne',
+                'kurir' : 'JNE'
+            }
+        ]
+        setDataSelect(data,key,key)
+        setTimeout(()=>{
+                $('#'+key).prop('disabled', false);
+                $('#box-load-'+key).hide();
+        }, 500)
+    }
+
+    // kurir change
+    $('#kurir').change(function() {
+        loadCost()
+    });
+
+    function setDataSelect(data, type, name, name_id = null){
+        const formattedData = data.map(function(item) {
+            return {
+                id: item[`${name_id ?? name}_id`], 
+                text: item[`${name}`]
+            };
+        });
+        $(`#${type}`).select2({
+            data: formattedData
+        });
+    }
+
+    function loadCost(){
+        var destination = $('#subdistrict_id option:selected').val();
+        var kurir = $('#kurir option:selected').val();
+
+        let _url = `{{url('/ongkir/cost')}}`;
+        let _token = $('meta[name="csrf-token"]').attr('content');
+        const data =  {
+            destination: destination,
+            weight: berat,
+            courier: kurir,
+            _token: _token
+        }
+        $.ajax({
+            url: _url,
+            type: "POST",
+            data,
+            dataType: "json",
+            beforeSend: function(){
+                $('#layanan').val(null)
+                $(`#layanan`).select2({
+                    data: []
+                });
+            },
+            success: function(response) {
+                if (response.length) {
+                    let formattedData = []
+                    response[0].costs.forEach((v) => {
+                        formattedData.push({
+                            id: v.cost[0]['value'],
+                            text: v.service+' (etd: '+v.cost[0]['etd']+' Hari) - '+v.cost[0]['value']
+                        })
+                    });
+                    $(`#layanan`).select2({
+                        data: formattedData
+                    });
+                    $('#layanan').prop('disabled', false);
+                    $('#box-load-layanan').hide();
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(status + ': ' + error);
+            }
+        })
+
+    }
+    // layanan select
+    $('#layanan').change(function() {
+        let ongkir = $(this).val()
+        ongkir = Number(ongkir)
+        var subtotal = total_price-total_voc
+        var total = subtotal + ongkir;
+        $('#text-cost').text(formatRP(ongkir));
+        $('#shipping_cost').val(ongkir);
+        $('#total-text').text(formatRP(total))
+    });
+
+    function formatRP(number){
+        const formattedNumber = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+        }).format(number);
+        return formattedNumber
+    }
+</script>
 @endsection

@@ -267,7 +267,7 @@ $(document).ready(function(){
 
     function checkCost() {
         var origin = '{{ $data["shipping_address"]->city_id }}';
-        var destination = $('#city_id option:selected').data('id');
+        // var destination = $('#city_id option:selected').data('id');
         var weight = "{{ $data['carts']->sum('total_weight_per_product') }}";
         var courier = $('#courier option:selected').val();
 
@@ -308,44 +308,44 @@ $(document).ready(function(){
         });
     }
 
-    $('#province_id').on('change', function() {
-        var provinceId = $('#province_id option:selected').data('id');
-        $('#city_id').empty();
-        $('#city_id').append('<option value="">-- Loading Data --</option>');
-        $.ajax({
-            url: '/rajaongkir/province/' + provinceId,
-            type: "GET",
-            dataType: "json",
-            success: function(data) {
-                if (data) {
-                    $('#city_id').empty();
-                    $('#city_id').removeAttr('disabled');
-                    $('select[name="city_id"]').append(
-                        'option value="" selected>-- Select City --</option>');
-                    $.each(data, function(key, city) {
-                        $('select[name="city_id"]').append('<option value="' + city
-                            .city_name + '" data-id="'+city.city_id+'">' + city.type + ' ' + city.city_name +
-                            '</option>');
-                    });
-                    checkCost();
-                } else {
-                    $('#city_id').empty();
-                }
-            }
-        });
-    });
+    // $('#province_id').on('change', function() {
+    //     var provinceId = $('#province_id option:selected').data('id');
+    //     $('#city_id').empty();
+    //     $('#city_id').append('<option value="">-- Loading Data --</option>');
+    //     $.ajax({
+    //         url: '/rajaongkir/province/' + provinceId,
+    //         type: "GET",
+    //         dataType: "json",
+    //         success: function(data) {
+    //             if (data) {
+    //                 $('#city_id').empty();
+    //                 $('#city_id').removeAttr('disabled');
+    //                 $('select[name="city_id"]').append(
+    //                     'option value="" selected>-- Select City --</option>');
+    //                 $.each(data, function(key, city) {
+    //                     $('select[name="city_id"]').append('<option value="' + city
+    //                         .city_name + '" data-id="'+city.city_id+'">' + city.type + ' ' + city.city_name +
+    //                         '</option>');
+    //                 });
+    //                 checkCost();
+    //             } else {
+    //                 $('#city_id').empty();
+    //             }
+    //         }
+    //     });
+    // });
 
-    $('#city_id').on('change', function() {
-        checkCost();
-    });
-    $('#courier').on('change', function() {
-        checkCost();
-    });
+    // $('#city_id').on('change', function() {
+    //     checkCost();
+    // });
+    // $('#courier').on('change', function() {
+    //     checkCost();
+    // });
 
-    $('#shipping_method').on('change',function(){
-        var ongkir = parseInt($('#shipping_method option:selected').data('ongkir'));
-        countCost(ongkir);
-    })
+    // $('#shipping_method').on('change',function(){
+    //     var ongkir = parseInt($('#shipping_method option:selected').data('ongkir'));
+    //     countCost(ongkir);
+    // })
 
     function countCost(ongkir)
     {

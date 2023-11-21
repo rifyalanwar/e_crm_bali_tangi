@@ -122,11 +122,9 @@ ga('send', 'pageview')
 <script type="text/javascript" src="{{ url('front/js/owl.carousel.min.js') }}"></script>
 <!-- Main -->
 <script type="text/javascript" src="{{ url('front/js/app.js') }}"></script>
-  <!-- Custom Front JS -->
-  <script src="{{ url('front/js/custom.js') }}"></script>
-  <!-- End Custom Front JS -->
-
-
-
+<!-- Custom Front JS -->
+<script src="{{ url('front/js/custom.js') }}"></script>
+<!-- End Custom Front JS -->
+@yield('script')
 </body>
 </html>

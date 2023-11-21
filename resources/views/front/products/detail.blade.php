@@ -112,9 +112,9 @@
                         <div class="sizes u-s-m-b-11" style="margin-top: 20px;">
                             <span class="item-name information-heading u-s-m-b-8">Ukuran:</span>
                             <div class="size-variant select-box-wrapper">
-                                <select name="size" id="getPrice" product-id="{{ $productDetails['id'] }}" class="select-box product-size" readonly="">
+                                <select name="att_id" id="getPrice" product-id="{{ $productDetails['id'] }}" class="select-box product-size" readonly="">
                                     @foreach($productDetails['attributes'] as $attribute)
-                                        <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>
+                                        <option value="{{ $attribute['id'] }}">{{ $attribute['size'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -167,6 +167,7 @@
                             <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">
                             @foreach($productDetails['attributes'] as $attribute)
                             <input type="hidden" name="size" value="{{ $attribute['size'] }}">
+                            <input type="hidden" name="weight" value="{{ $attribute['weight'] }}">
                             @endforeach  
                             <button class="button button-outline-secondary userLogin far fa-heart u-s-m-l-6" title="Tambah ke Wishlist"></button>                                        
                         </form>                         

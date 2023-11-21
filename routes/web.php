@@ -202,4 +202,5 @@ Route::prefix('/ongkir')->group(function () {
     Route::get('/provinces', [RajaongkirController::class, 'provinces']);
     Route::get('/cities/{province_id}', [RajaongkirController::class, 'cities']);
     Route::get('/districts/{city_id}', [RajaongkirController::class, 'districts']);
+    Route::post('/cost', [RajaongkirController::class, 'cost']);
 });

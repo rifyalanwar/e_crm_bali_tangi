@@ -66,9 +66,11 @@ class RajaongkirService
     {
         return $this->apiCall('/subdistrict?city=' . $city_id);
     }
-    public function cost($origin, $destination, $weight, $courier)
+    public function cost($destination, $weight, $courier)
     {
-        $field = 'origin=' . $origin . '&destination=' . $destination . '&weight=' . $weight . '&courier=' . $courier;
+        $originaddress = \DB::table('originaddress')->first();
+        if (!$originaddress) trigger_error("Config original address tidak ditemukan");
+        $field = 'origin=' . $originaddress->district_id . "&originType=subdistrict" . '&destination=' . $destination . '&destinationType=subdistrict' . '&weight=' . $weight . '&courier=' . $courier;
         return $this->apiCall('/cost', $field, 'POST');
     }
 }

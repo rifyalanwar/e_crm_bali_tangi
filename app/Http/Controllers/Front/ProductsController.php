@@ -70,8 +70,12 @@ class ProductsController extends Controller
             $data = $request->all();
         }
 
+        $product_att = \DB::table('products_attributes')->where('id', $data['att_id'])->first();
+        $size = @$product_att->size ?? 0;
+        $weight = @$product_att->weight ?? 0;
+
         // Check Product Stock is available or not
-        $getProductStock = Product::getProductStock($data['product_id'], $data['size']);
+        $getProductStock = Product::getProductStock($data['product_id'], @$product_att->size ?? 0);
         if ($getProductStock < $data['quantity']) {
             return redirect()->back()->with('error_message', 'Produk tidak tersedia');
         }
@@ -87,24 +91,26 @@ class ProductsController extends Controller
         if (Auth::check()) {
             //User was logged in
             $user_id = Auth::user()->id;
-            $countProducts = Cart::where(['product_id' => $data['product_id'], 'size' => $data['size'], 'user_id' => $user_id])->count();
+            $countProducts = Cart::where(['product_id' => $data['product_id'], 'size' => $size, 'user_id' => $user_id])->count();
         } else {
             // User is not logged in
             $user_id = 0;
-            $countProductss = Cart::where(['product_id' => $data['product_id'], 'size' => $data['size'], 'session_id' => $session_id])->count();
+            $countProductss = Cart::where(['product_id' => $data['product_id'], 'size' => $size, 'session_id' => $session_id])->count();
         }
 
         if ($countProducts > 0) {
             return redirect()->back()->with('error_message', 'Produk sudah ada pada keranjang belanja');
         }
 
+
         // Save Products in carts table
         $item = new Cart;
         $item->session_id = $session_id;
         $item->user_id = $user_id;
         $item->product_id = $data['product_id'];
-        $item->size = $data['size'];
+        $item->size = $size;
         $item->quantity = $data['quantity'];
+        $item->weight = $weight;
         $item->save();
         return redirect()->back()->with('success_message', 'Produk berhasil ditambahkan ke keranjang. <a style="text-decoration:underline !important" href="/cart">Tampilkan Keranjang </a>');
     }
@@ -396,7 +402,6 @@ class ProductsController extends Controller
             $data = $request->all();
         }
 
-
         // Generate Session if not exist
         $session_id = Session::get('session_id');
         if (empty($session_id)) {
@@ -420,13 +425,13 @@ class ProductsController extends Controller
             return redirect()->back()->with('error_message', 'Produk sudah ada pada wishlist');
         }
 
-
         // Save Products in wishlist table
         $item = new Wishlist;
         $item->session_id = $session_id;
         $item->user_id = $user_id;
         $item->product_id = $data['product_id'];
         $item->size = $data['size'];
+        $item->weight = $data['weight'];
         $item->save();
         return redirect()->back()->with('success_message', 'Produk berhasil ditambahkan ke wishlist. <a style="text-decoration:underline !important" href="/wishlist">Tampilkan wishlist </a>');
     }
