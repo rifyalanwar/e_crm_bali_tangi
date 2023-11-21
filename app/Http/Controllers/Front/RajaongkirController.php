@@ -8,20 +8,34 @@ use Illuminate\Http\Request;
 
 class RajaongkirController extends Controller
 {
-    protected $rajaongkirService;
+    protected $api;
 
     public function __construct(RajaongkirService $rajaongkirService)
     {
-        $this->rajaongkirService = $rajaongkirService;
+        $this->api = $rajaongkirService;
     }
 
-    public function getCity($province_id)
+    public function provinces()
     {
-        return $this->rajaongkirService->getCity($province_id);
+        return $this->api->getProvince();
+    }
+
+    public function cities($province_id)
+    {
+        $data = $this->api->getCity($province_id);
+        foreach ($data as $idx => $dt) {
+            $data[$idx]['city_name'] = $data[$idx]['city_name'] . ' ' . ($data[$idx]['type'] == 'Kota' ? '(Kota)' : '');
+        }
+        return $data;
+    }
+
+    public function districts($city_id)
+    {
+        return $this->api->getDistrict($city_id);
     }
 
     public function cost(Request $request)
     {
-        return $this->rajaongkirService->cost($request->origin,$request->destination,$request->weight,$request->courier);
+        return $this->api->cost($request->origin, $request->destination, $request->weight, $request->courier);
     }
 }
