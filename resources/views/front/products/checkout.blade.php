@@ -382,6 +382,9 @@
 
     // PROCESS CHECKOUT
     $('#button-click-checkout').click(()=>{
+        if(!data_fix.shipping_cost) {
+            return alert('pilih alamat tujuan anda terlebih dahulu');
+        }
         data_fix.note = $('#order-notes').val();
         const data = data_fix;
         $.ajax({

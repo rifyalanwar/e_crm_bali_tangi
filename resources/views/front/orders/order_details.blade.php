@@ -8,7 +8,8 @@
         </div>
     </div>
 </div>
-<div class="page-cart u-s-p-t-80">
+<div class="page-cart mb-5">
+    <div id="alert-ok"></div>
     <div class="container">
         <div class="row">
             <table class="table table-striped table-borderless">
@@ -53,13 +54,22 @@
                 <tr><td>Nomor Telepon</td><td>{{ $orderDetails['mobile']}}</td></tr>
             </table> --}}
         </div>
-            <button onclick="payment()" id="btn-payment" class="btn btn-primary float-right">Bayar Sekarang</button>
+        @if(@$orderDetails['order_status'] == 'Menunggu Pembayaran')                                         
+            <button onclick="payment()" id="btn-payment" class="btn btn-primary float-right"><i class="fa fa-paper-plane"></i> Bayar Sekarang</button>
+        @else
+            <button onclick="redirect()" class="btn btn-primary float-right"><i class="fa fa-list"></i> Daftar Pesanan</button>
+        @endif
     </div>
 </div>
 @endsection
 @section('script')
 <script>
     let order_id = "{{$orderDetails['id']}}";
+
+    function redirect(){
+        window.location.href="{{url('/user/orders')}}"
+    }
+
     function payment(){
         $.ajax({
         url: `{{ url('/payment/${order_id}') }}`,
@@ -86,7 +96,23 @@
         window.snap.pay(token, {
             onSuccess: function(result){
             /* You may add your own implementation here */
-            alert("payment success!"); console.log(result);
+                $('#alert-ok').html(`
+                      <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <div class="page-cart">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-12" align="center">
+                                        <h2>Terima Kasih</h2>              
+                                        <h3>Pesanan Anda sudah berhasil diproses.</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
             },
             onPending: function(result){
             /* You may add your own implementation here */

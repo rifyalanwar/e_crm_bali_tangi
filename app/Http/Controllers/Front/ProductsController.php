@@ -325,6 +325,7 @@ class ProductsController extends Controller
             $order->shipping_charges = $request->shipping_cost;
             $order->courier = $request->courier;
             $order->destination = $request->destination;
+            $order->note = @$request->note;
             $order->save();
             $order_id = DB::getPdo()->lastInsertId();
 
@@ -344,7 +345,7 @@ class ProductsController extends Controller
 
             // Insert Order Id in Session variable
             Session::put('order_id', $order_id);
-
+            \DB::table('carts')->where('user_id', auth()->user()->id)->delete();
             DB::commit();
 
             $orderDetails = Order::with('orders_detail')->where('id', $order_id)->first()->toArray();

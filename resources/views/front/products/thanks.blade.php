@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-lg-12" align="center">
                 <h3>Pesanan Anda sudah berhasil diproses.</h3>
-                <p>No. Pesanan Anda adalah {{ Session::get('order_id') }} dan total jumlah pemesanan adalah {{ Session::get('grand_total') }}</p>
+                <p>No. Pesanan Anda adalah {{ Session::get('order_id') }}</p>
             </div>
         </div>
     </div>

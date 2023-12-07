@@ -90,7 +90,7 @@
                                         </tr>
                                     </tbody>
                                 </table>                                
-                                &nbsp;                                          
+                                &nbsp; 
                                 <button type="submit" class="button button-primary" id="pay-button">Bayar Sekarang</button>
                             </div>
                         </div>
