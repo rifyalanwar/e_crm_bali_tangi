@@ -19,7 +19,6 @@
             </button>
           </div>
         @endif
-        <form name="checkoutForm" id="checkoutForm" action="{{ url('/checkout') }}" method="post">@csrf
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <div class="row">
@@ -164,20 +163,18 @@
                                             </td>
                                             <td>
                                                 <h3 class="order-h3" id="total-text">{{ formatRupiah($total_price - Session::get('couponAmount')) }}</h3>
-                                                <input type="hidden" name="shipping_cost" id="shipping_cost" >
                                             </td>
                                         </tr>
                                     </tbody>
-                                </table>                                
+                                </table>   
                                 &nbsp;                                          
-                                <button type="submit" class="button button-primary">Lanjutkan ke Pembayaran</button>
+                                <button type="button" id="button-click-checkout" class="button button-primary">Lanjutkan ke Pembayaran</button>
                             </div>
                         </div>
                         <!-- Checkout /- -->
                     </div>
                 </div>
             </div>
-        </form>  
     </div>
 </div>
 <!-- Checkout-Page /- -->
@@ -190,6 +187,7 @@
     let total_price = "{{ @$total_price ?? 0 }}";
     let total_voc = "{{ @Session::get('couponAmount') ?? 0 }}";
     let fix_cost = 0
+    let data_fix = {};
     $(document).ready(function() {
         $('.select2').select2();
         loadProv();
@@ -372,6 +370,43 @@
         $('#text-cost').text(formatRP(ongkir));
         $('#shipping_cost').val(ongkir);
         $('#total-text').text(formatRP(total))
+
+        // set the data before post
+        const prov =  $('#province_id').select2('data');
+        const city =  $('#city_id').select2('data');
+        const subdistrict =  $('#subdistrict_id').select2('data');
+        data_fix.destination = `${prov[0].text}, ${city[0].text}, ${subdistrict[0].text}`;
+        data_fix.courier = $('#kurir option:selected').val();
+        data_fix.shipping_cost = ongkir;
+    });
+
+    // PROCESS CHECKOUT
+    $('#button-click-checkout').click(()=>{
+        data_fix.note = $('#order-notes').val();
+        const data = data_fix;
+        $.ajax({
+            url: "{{ url('/checkout') }}",
+            type: "POST",
+            data:{
+                ...data,
+                "_token": "{{ csrf_token() }}"
+            },
+            dataType: "json",
+            beforeSend: function(){
+                $('#button-click-checkout').text('Memproses data...');
+                $('#button-click-checkout').attr('disabled',true);
+            },
+            success: function(response) {
+                $('#button-click-checkout').text('Lanjutkan ke Pembayaran');
+                $('#button-click-checkout').attr('disabled',false);
+                window.location.href=response.redirect
+            },
+            error: function(xhr, status, error) {
+                $('#button-click-checkout').text('Lanjutkan ke Pembayaran');
+                $('#button-click-checkout').attr('disabled',false);
+                console.error(status + ': ' + error);
+            }
+        })
     });
 
     function formatRP(number){

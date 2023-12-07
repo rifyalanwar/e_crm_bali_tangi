@@ -295,7 +295,7 @@ class ProductsController extends Controller
             }
 
             // Calculate Shipping Charges
-            $shipping_charges = 0;
+            $shipping_charges = $request['shipping_cost'];
 
             $dataOrder = [
                 'destination' =>  $request['city_id'] . ', ' . $request['province_id'],
@@ -318,11 +318,13 @@ class ProductsController extends Controller
             $order->address = Auth::user()->address;
             $order->mobile = Auth::user()->mobile;
             $order->email = Auth::user()->email;
-            $order->shipping_charges = $shipping_charges;
             $order->coupon_code = Session::get('couponCode');
             $order->coupon_amount = Session::get('couponAmount');
-            $order->order_status = "Baru";
+            $order->order_status = "Menunggu Pembayaran";
             $order->grand_total = $grand_total;
+            $order->shipping_charges = $request->shipping_cost;
+            $order->courier = $request->courier;
+            $order->destination = $request->destination;
             $order->save();
             $order_id = DB::getPdo()->lastInsertId();
 
@@ -347,17 +349,16 @@ class ProductsController extends Controller
 
             $orderDetails = Order::with('orders_detail')->where('id', $order_id)->first()->toArray();
 
-            return redirect('thanks');
+            return response(['message' => "Checkout berhasil", 'redirect' => url("/user/orders/$order_id")]);
         }
 
         return view('front.products.checkout')->with(compact('getCartItems'));
     }
 
-    public function payment(Request $request)
+    public function payment(Request $request, $id)
     {
 
-        $orderDetails = Order::with('orders_detail')->where('id', $id)->first()->toArray();
-
+        $orderDetails = Order::where('id', $id)->first();
 
         // Set your Merchant Server Key
         \Midtrans\Config::$serverKey = config('midtrans.server_key');
@@ -381,7 +382,7 @@ class ProductsController extends Controller
         );
 
         $snapToken = \Midtrans\Snap::getSnapToken($params);
-        return view('front.products.payment')->with(compct('orderDetails', 'snapToken'));
+        return response(['message' => 'Token pembayaran berhasil dibuat', 'data' => $snapToken]);
     }
 
 
@@ -419,7 +420,6 @@ class ProductsController extends Controller
             $user_id = 0;
             $countProducts = Wishlist::where(['product_id' => $data['product_id'], 'size' => $data['size'], 'session_id' => $session_id])->count();
         }
-
         if ($countProducts > 0) {
 
             return redirect()->back()->with('error_message', 'Produk sudah ada pada wishlist');

@@ -29,23 +29,23 @@ $(function () {
         zIndex: 100,
     });
 
-    // Bind this plugin on Product `Detail` page
-    $('#zoom-pro').elevateZoom({
-        gallery: 'gallery',
-        galleryActiveClass: 'active',
-        borderSize: 1,
-        zoomWindowWidth: 540,
-        zoomWindowHeight: 540,
-        zoomWindowOffetx: 10,
-        borderColour: '#e9e9e9',
-    });
+    // // Bind this plugin on Product `Detail` page
+    // $('#zoom-pro').elevateZoom({
+    //     gallery: 'gallery',
+    //     galleryActiveClass: 'active',
+    //     borderSize: 1,
+    //     zoomWindowWidth: 540,
+    //     zoomWindowHeight: 540,
+    //     zoomWindowOffetx: 10,
+    //     borderColour: '#e9e9e9',
+    // });
 
-    // For `modals` we don't want to enable `zoom window`.
-    $('#zoom-pro-quick-view').elevateZoom({
-        gallery: 'gallery-quick-view',
-        galleryActiveClass: 'active',
-        zoomEnabled: false, // false disables zoomwindow from showing
-    });
+    // // For `modals` we don't want to enable `zoom window`.
+    // $('#zoom-pro-quick-view').elevateZoom({
+    //     gallery: 'gallery-quick-view',
+    //     galleryActiveClass: 'active',
+    //     zoomEnabled: false, // false disables zoomwindow from showing
+    // });
 
     // Bind resize select on mid header
     $('#select-category', document).ResizeSelect();

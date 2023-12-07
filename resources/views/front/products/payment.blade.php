@@ -47,7 +47,6 @@
                                                 <h6 class="order-h6">{{ $product['product_name'] }}<br>{{ $product['product_size'] }} × {{ $product['product_qty'] }}</h6></a>
                                             </td>
                                             <td>
-                                                <h6 class="order-h6">{{ formatRupiah({{ $product['product_price'] }} * {{ $product['product_qty'] }}) }}</h6>
                                             </td>
                                         </tr>
                                         @php $total_price = $total_price + ($product['product_price'] * $product['product_qty']) @endphp

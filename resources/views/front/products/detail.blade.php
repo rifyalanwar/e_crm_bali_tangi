@@ -159,7 +159,11 @@
                                         </div>
                                     </div>
                                     <div>
+                                        @if(auth()->check())
                                         <button class="button button-primary" type="submit">Add to cart</button>                                    
+                                        @else
+                                        <a href="{{url('/user/login-or-register')}}" class="button button-primary" >Add to cart</a>                                    
+                                        @endif
                                     </div>                                                                                          
                             </div>
                         </form>
@@ -169,7 +173,11 @@
                             <input type="hidden" name="size" value="{{ $attribute['size'] }}">
                             <input type="hidden" name="weight" value="{{ $attribute['weight'] }}">
                             @endforeach  
+                            @if(auth()->check())
                             <button class="button button-outline-secondary userLogin far fa-heart u-s-m-l-6" title="Tambah ke Wishlist"></button>                                        
+                            @else
+                            <a href="{{url('/user/login-or-register')}}" class="button button-outline-secondary userLogin far fa-heart u-s-m-l-6" title="Tambah ke Wishlist" ></a>                                    
+                            @endif
                         </form>                         
                     </div>
                     <!-- Product-details /- -->
