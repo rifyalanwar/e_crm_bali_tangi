@@ -27,10 +27,30 @@ class ProductsController extends Controller
 {
     public function listing()
     {
+        $req = app()->request;
+        $productsListing = Product::with('category', 'images', 'attributes');
 
-        $productsListing = Product::with('category', 'images', 'attributes')->get()->toArray();
+        if ($req->filled('search')) {
+            $productsListing = $productsListing->where('product_name', 'like', "%$req->search%");
+        }
 
+        $productsListing =  $productsListing->paginate($req->paginate ?? 2);
+        foreach ($productsListing as $d) {
+            $d->product_disc = Product::getDiscountAttributePrice($d->id);
+        }
+
+        $productsListing = json_encode($productsListing);
+        $productsListing = json_decode($productsListing);
         return view('front.products.listing')->with(compact('productsListing'));
+    }
+
+    public function getProduct()
+    {
+        $data = Product::with('category', 'images', 'attributes')->get();
+        foreach ($data as $d) {
+            $d->product_disc = Product::getDiscountAttributePrice($d['id']);
+        }
+        return response(['message' => 'Get product berhasil', 'data' => $data]);
     }
 
     public function detail($id)

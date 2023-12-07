@@ -195,7 +195,8 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
     //Newsletter subscribe Route
     Route::post('/subscribe', 'NewslettersController@subscribe');
 
-    //RajaOngkir
+    // getProduct
+    Route::get('/product/list', 'ProductsController@getProduct');
 });
 
 Route::prefix('/ongkir')->group(function () {
