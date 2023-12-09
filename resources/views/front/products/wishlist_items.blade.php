@@ -1,11 +1,30 @@
 <?php use App\Models\Product; ?>  
   <!-- Products-List-Wrapper -->
+    @if(Session::has('success_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Berhasil </strong> {{ Session::get('success_message')}}.
+        <a class="text-primary" href="{{url('cart')}}">buka keranjang</a>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+    @if(Session::has('error_message'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Perhatian: </strong> {{ Session::get('error_message')}}.
+        <a class="text-primary" href="{{url('cart')}}">buka keranjang</a>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+    @endif
   <div class="table-wrapper u-s-m-b-60">
             <table>
                 <thead>
                     <tr>
                         <th class="text-center" style="width: 400px">Produk</th>
                         <th class="text-right" >Harga Unit</th>
+                        <th class="text-center" >Status Ketersediaan</th>
                         <th class="text-center" >Aksi</th>
                     </tr>
                 </thead>
@@ -44,19 +63,23 @@
                                         </div>
                                     </div>
                                 @endif
-                                @php
-                                    $stok_ready = ($item['product']['stock'] == null || $item['product']['stock'] < 1);
-                                @endphp
-                                <div class="d-flex justify-content-end {{ $stok_ready ? 'text-danger' : 'text-success' }}">
-                                    <i>{{ $stok_ready ? 'Tidak Tersedia' : 'Tersedia' }}</i>
-                                </div>
+                          
                             </div>
                         </td>
-    
+                        <td class="text-center">
+                            @php
+                                $stok_ready = ($item['product']['stock'] == null || $item['product']['stock'] < 1);
+                            @endphp
+                            <div class="d-flex justify-content-center {{ $stok_ready ? 'text-danger' : 'text-success' }}">
+                                <span>{{ $stok_ready ? 'Tidak Tersedia' : 'Tersedia' }}</span>
+                            </div>
+                        </td>
                         <td class="text-center">
                             <div class="action-wrapper">
                                 <form action="{{ url('cart/add') }}" class="post-form" method="Post">@csrf
-                                   
+                                    <input type="hidden" value="{{$item['id']}}" name="att_id">
+                                    <input type="hidden" value="{{$item['product']['id']}}" name="product_id">
+                                    <input type="hidden" value="1" name="quantity">
                                     <button class="button button-primary" type="submit">Add to cart</button>
                                 </form>                                             
                             </div>

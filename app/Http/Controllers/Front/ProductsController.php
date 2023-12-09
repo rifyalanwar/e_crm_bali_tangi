@@ -115,6 +115,7 @@ class ProductsController extends Controller
             Session::put('session_id' . $session_id);
         }
 
+
         //Check existing product on cart
         if (Auth::check()) {
             //User was logged in
@@ -468,6 +469,7 @@ class ProductsController extends Controller
     public function wishlist()
     {
         $getWishlistItems = Wishlist::getWishlistItems();
+        // dd($getWishlistItems);
 
         return view('front.products.wishlist')->with(compact('getWishlistItems'));
     }

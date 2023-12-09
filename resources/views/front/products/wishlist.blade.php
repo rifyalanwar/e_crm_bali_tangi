@@ -17,6 +17,7 @@
                      @include('front.products.wishlist_items')
                 </div>
             </div>
+            
         </div>
     </div>
 </div>    
