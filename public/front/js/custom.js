@@ -212,8 +212,9 @@ $(document).ready(function(){
                 } else if(resp.type=="success"){
                     window.location.href = resp.url;
                 }
-            }, error:function(){
-                alert("Error");
+            }, error:function(e){
+                // alert("Error");
+                console.warn("Error login : "+e);
             }
         })
     });

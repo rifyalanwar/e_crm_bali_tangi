@@ -6,65 +6,64 @@
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Laporan Pelanggan</h4>                     
+                        @php
+                            $filter = app()->request->query('filter') ;
+                        @endphp
+                        <h4 class="card-title">Laporan Pelanggan</h4>      
+                        <button onclick="filter('all')" class="btn {{ $filter == 'all' || !$filter ? 'btn-primary' : 'btn-outline-primary' }}">
+                            Semua Transaksi
+                        </button>               
+                        <button onclick="filter('transaksi_terbanyak')" class="btn {{ $filter == 'transaksi_terbanyak' || !$filter ? 'btn-primary' : 'btn-outline-primary' }}">
+                            Transaksi Terbanyak
+                        </button>               
+                        <button onclick="filter('pelanggan_lama')" class="btn {{ $filter == 'pelanggan_lama' || !$filter ? 'btn-primary' : 'btn-outline-primary' }}">
+                            Pelanggan Lama
+                        </button>               
+                        <button onclick="filter('belanja_terbanyak')" class="btn {{ $filter == 'belanja_terbanyak' || !$filter ? 'btn-primary' : 'btn-outline-primary' }}">
+                            Total Belanja Terbanyak
+                        </button>               
                         <div class="table-responsive pt-3">
-                            <table id="reports" class="table table-bordered">
+                            {{-- <table id="reports" class="table table-bordered"> --}}
+                            <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>
-                                            ID
-                                        </th>
-                                        <th>
-                                            Nama
-                                        </th>                                    
-                                        <th>
-                                            E-mail
-                                        </th>
-                                        <th>
-                                            No. Telepon
-                                        </th>
-                                        <th>
-                                            Alamat
-                                        </th>
-                                        <th>
-                                            Tanggal Lahir
-                                        </th>
-                                        <th>
-                                            Jumlah Transaksi
-                                        </th>
-                                        <th>
-                                            Tanggal Pembelian Terakhir
-                                        </th>
-                                        
+                                        <th>ID</th>
+                                        <th>Nama</th>                                    
+                                        <th>E-mail</th>
+                                        <th>No. Telepon</th>
+                                        <th>Alamat</th>
+                                        <th>Tanggal Lahir</th>
+                                        @if(!$filter || $filter == 'all' || $filter == 'transaksi_terbanyak')
+                                        <th>Jml Transaksi</th>
+                                        @endif
+                                        @if(!$filter || $filter == 'all' || $filter == 'belanja_terbanyak')
+                                        <th>Total Belanja</th>
+                                        @endif
+                                        @if(!$filter || $filter == 'all' || $filter == 'pelanggan_lama')
+                                        <th>Tanggal Pembelian Terakhir</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>                                                                    
-                                    <tr>
-                                        <td>
-                                            1
-                                        </td>
-                                        <td>
-                                            Daniel Zoltan
-                                        </td>                                        
-                                        <td>
-                                            danielsyahreza@gmail.com
-                                        </td>
-                                        <td>
-                                            0817418374203874
-                                        </td>
-                                        <td>
-                                            Pasraman Unud B.73
-                                        </td>
-                                        <td>
-                                            19 Juli 1999
-                                        </td>
-                                        <td>
-                                            7
-                                        </td>
-                                        <td>
-                                            24-05-2023
-                                        </td>                                          
-                                    </tr>
+                                    @foreach ($data as $d)
+                                        <tr>
+                                            <td>#{{$d->id}}</td>
+                                            <td>{{$d->name}}</td>
+                                            <td>{{$d->email}}</td>
+                                            <td>{{$d->mobile}}</td>
+                                            <td>{{$d->address}}</td>
+                                            <td>{{$d->birthdate}}</td>
+                                            @if(!$filter || $filter == 'all' || $filter == 'transaksi_terbanyak')
+                                                <td class="text-right">{{$d->total_pembelian}}</td>
+                                            @endif
+                                            @if(!$filter || $filter == 'all' || $filter == 'belanja_terbanyak')
+                                                <td class="text-right">{{formatRupiah(@$d->total_belanja ?? 0)}}</td>
+                                            @endif
+                                            @if(!$filter || $filter == 'all' || $filter == 'pelanggan_lama')
+                                                <td>{{$d->tgl_pembelian_trkhr}}</td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -78,4 +77,10 @@
     @include('admin.layout.footer')
     <!-- partial -->
 </div>
+<script>
+    function filter(t){
+        let url = "{{ url('/admin/customer-reports') }}";
+        window.location.href=url+'?filter='+t;
+    }
+</script>
 @endsection

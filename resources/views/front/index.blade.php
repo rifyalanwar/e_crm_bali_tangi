@@ -7,7 +7,12 @@
         @foreach($sliderBanners as $banner)
         <div class="bg-image">
             <div class="slide-content">
-                <h1><a @if(!empty($banner['link'])) href="{{ url($banner['link']) }}" @else href="javascript:;" @endif><img title="{{ $banner['title'] }}" alt="{{ $banner['title'] }}" src="{{ asset('front/images/banner_images/'.$banner['image']) }}"></a></h1>
+                <h1>
+                    <a>
+                    {{-- <a @if(!empty($banner['link'])) href="{{ url($banner['link']) }}" @else href="javascript:;" @endif> --}}
+                        <img title="{{ $banner['title'] }}" alt="{{ $banner['title'] }}" src="{{ asset('front/images/banner_images/'.$banner['image']) }}">
+                    </a>
+                </h1>
                 <h2>{{ $banner['title'] }}</h2>
             </div>
         </div>
