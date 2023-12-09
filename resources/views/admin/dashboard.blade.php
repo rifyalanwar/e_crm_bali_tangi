@@ -13,29 +13,38 @@
             </div>
         </div>
         <div class="row">            
-            <div class="col-md-9 grid-margin transparent">
+            <div class="col-md-12 grid-margin transparent">
                 <div class="row">
-                    <div class="col-md-4  stretch-card transparent">
-                        <div class="card card-tale">
-                            <div class="card-body">
-                                <p class="mb-4">Pesanan Baru</p>
-                                <p class="fs-30 mb-2">0</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4  stretch-card transparent">
+                 
+                    <div class="col-md-3  stretch-card transparent">
                         <div class="card card-dark-blue">
                             <div class="card-body">
                                 <p class="mb-4">Pelanggan Baru</p>
-                                <p class="fs-30 mb-2">0</p>
+                                <p class="fs-30 mb-2">{{$pelanggan_baru}}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4  stretch-card transparent">
+                       <div class="col-md-3  stretch-card transparent">
+                        <div class="card card-tale">
+                            <div class="card-body">
+                                <p class="mb-4">Pesanan Baru</p>
+                                <p class="fs-30 mb-2">{{$pesanan_baru}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3  stretch-card transparent">
                         <div class="card card-light-blue">
                             <div class="card-body">
-                                <p class="mb-4">Pengunjung Baru</p>
-                                <p class="fs-30 mb-2">0</p>
+                                <p class="mb-4">Transaksi Lunas</p>
+                                <p class="fs-30 mb-2">{{$total_transaksi_perlu_lunas}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3  stretch-card transparent">
+                        <div class="card card-light-blue">
+                            <div class="card-body">
+                                <p class="mb-4">Total Transaksi Berhasil</p>
+                                <p class="fs-30 mb-2">{{$total_transaksi_berhasil}}</p>
                             </div>
                         </div>
                     </div>
