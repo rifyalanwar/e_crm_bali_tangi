@@ -33,6 +33,7 @@
                     <th>Nama Produk</th>
                     <th>Ukuran Produk</th>
                     <th>Jumlah Produk</th>
+                    <th>Aksi</th>
                 </tr>
                 @foreach($orderDetails['orders_detail'] as $product)
                     <tr>
@@ -43,6 +44,7 @@
                         <td>{{ $product['product_name'] }}</td>
                         <td>{{ $product['product_size'] }}</td>
                         <td>{{ $product['product_qty'] }}</td>
+                        <td><a class="text-primary" href="{{ url('/produk').'/'.$product['product_id'] }}">Beri Ulasan</a></td>
                     </tr>
                 
                 @endforeach   
