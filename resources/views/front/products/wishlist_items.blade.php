@@ -1,13 +1,12 @@
 <?php use App\Models\Product; ?>  
-  
   <!-- Products-List-Wrapper -->
   <div class="table-wrapper u-s-m-b-60">
             <table>
                 <thead>
                     <tr>
-                        <th class="text-center">Produk</th>
-                        <th class="text-center">Harga Unit</th>
-                        <th class="text-center">Aksi</th>
+                        <th class="text-center" style="width: 400px">Produk</th>
+                        <th class="text-right" >Harga Unit</th>
+                        <th class="text-center" >Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,23 +27,29 @@
                             </div>
                         </td>
                         <td>
-                                <div class="cart-price">
+                            <div class="cart-price">
                                 @if($getDiscountAttributePrice['discount']>0)
-                                <div class="price-template">
-                                    <div class="item-new-price">
-                                        {{ formatRupiah($getDiscountAttributePrice['final_price']) }}
+                                    <div class="price-template d-flex justify-content-end">
+                                        <div class="item-new-price ">
+                                            {{ formatRupiah($getDiscountAttributePrice['final_price']) }}
+                                        </div>
+                                        <div class="item-old-price" style="margin-left:15px">
+                                            {{ formatRupiah($getDiscountAttributePrice['product_price']) }}
+                                        </div>
                                     </div>
-                                    <div class="item-old-price" style="margin-left:-40px;">
-                                        {{ formatRupiah($getDiscountAttributePrice['product_price']) }}
+                                    @else
+                                    <div class="price-template">
+                                        <div class="item-new-price">
+                                            {{ formatRupiah($getDiscountAttributePrice['final_price']) }}
+                                        </div>
                                     </div>
+                                @endif
+                                @php
+                                    $stok_ready = ($item['product']['stock'] == null || $item['product']['stock'] < 1);
+                                @endphp
+                                <div class="d-flex justify-content-end {{ $stok_ready ? 'text-danger' : 'text-success' }}">
+                                    <i>{{ $stok_ready ? 'Stok Tidak Tersedia' : 'Stok Tersedia' }}</i>
                                 </div>
-                                @else
-                                <div class="price-template">
-                                    <div class="item-new-price">
-                                        {{ formatRupiah($getDiscountAttributePrice['final_price']) }}
-                                    </div>
-                                </div>
-                            @endif
                             </div>
                         </td>
     
