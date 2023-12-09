@@ -34,6 +34,13 @@ class ProductsController extends Controller
             $productsListing = $productsListing->where('product_name', 'like', "%$req->search%");
         }
 
+        // filter by category
+        $filter = [];
+        if ($req->filled('cat_filter')) {
+            $filter = explode(',', $req->cat_filter);
+            $productsListing = $productsListing->whereIn('category_id', $filter);
+        }
+
         $productsListing =  $productsListing->paginate($req->paginate ?? 2);
         foreach ($productsListing as $d) {
             $d->product_disc = Product::getDiscountAttributePrice($d->id);

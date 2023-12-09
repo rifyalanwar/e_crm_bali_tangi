@@ -31,7 +31,7 @@ $search = app()->request->search;
                         <form class="facet-form" action="#" method="post">
                             <div class="associate-wrapper">
                                    <div class="form-group">
-                                    <input type="checkbox" class="check-box brand" name="cat_all" id="id_all" checked value="">
+                                    <input type="checkbox" class="check-box brand" name="cat_all" id="id_all" value="">
                                     <label class="label-text" for="id_all">Semua Kategori</label>
                                 </div>
                                 @foreach ($categories as $item)
@@ -42,7 +42,7 @@ $search = app()->request->search;
                                 @endforeach
                             </div>
                         </form>
-                        <button class="btn btn-primary btn-sm mt-2 float-right"><i class="fa fa-filter"></i>Terapkan Filter</button>
+                        {{-- <button class="btn btn-primary btn-sm mt-2 float-right"><i class="fa fa-filter"></i>Terapkan Filter</button> --}}
                     </div>
                 </div>
                 <!-- Shop-Left-Side-Bar-Wrapper /- -->
@@ -97,9 +97,7 @@ $search = app()->request->search;
                                             <a href="{{ url('produk/'.$product->id) }}" class="item-name">{{ $product->product_name }}</a>
                                         </h6>
                                         <div class="item-description">
-                                            <p>
-                                            {{ $product->description }}    
-                                            </p>
+                                            <p>{{ $product->description }}</p>
                                         </div>
                                         <div class="item-stars">
                                             <div class="star" title=" out of 0 - based on Reviews">
@@ -171,21 +169,54 @@ $search = app()->request->search;
     }
 
     function mount(type, arr = null) {
+        const urlString = "{{url()->full()}}";
+
+        const url = new URL(urlString);
+        const searchParams = url.searchParams;
+
+        // Remove the 'cat_filter' parameter
+        searchParams.delete('cat_filter');
+
+        // Get the updated URL without 'cat_filter'
+        var updatedURL = url.origin + url.pathname + '?' + searchParams.toString();
         if(type == 'all'){
-                const urlString = "{{url()->full()}}";
-
-                const url = new URL(urlString);
-                const searchParams = url.searchParams;
-
-                // Remove the 'cat_filter' parameter
-                searchParams.delete('cat_filter');
-
-                // Get the updated URL without 'cat_filter'
-                const updatedURL = url.origin + url.pathname + '?' + searchParams.toString();
-
-                console.log(updatedURL);
+            localStorage.removeItem('arr_cat_filter');
+            window.location.href=updatedURL
+        }else{
+            // let arrString = arr.join(',');
+            // updatedURL += '&cat_filter='+arrString
+            localStorage.setItem('arr_cat_filter', arr);
+            const arrItem = localStorage.getItem('arr_cat_filter');
+            const mergedArray = arrItem.concat(arr.filter(item => !arrItem.includes(item)));
+            window.location.href=updatedURL+'&cat_filter='+mergedArray;
         }
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Retrieve IDs from localStorage (replace 'storedIDs' with your localStorage key)
+        const storedIDs = localStorage.getItem('arr_cat_filter');
+        const parsedIDs = storedIDs?.split(',') ?? [];
+        // const parsedIDs = JSON.parse(arr) ?? [];
+
+        // Loop through checkboxes and check if their IDs are in localStorage
+        const checkboxes = document.querySelectorAll('input[name="categories"]');
+        checkboxes.forEach(checkbox => {
+            const checkboxID = checkbox.getAttribute('id').split('_')[1];
+            if (parsedIDs.includes(checkboxID)) {
+                checkbox.checked = true;
+            }
+        });
+        console.log(parsedIDs);
+        if(parsedIDs.length){
+            var all_check = false;
+        }else{
+            var all_check = true;
+        }
+        const checkboxesALL = document.querySelectorAll('input[name="cat_all"]');
+        checkboxesALL.forEach(checkbox => {
+            checkbox.checked = all_check;
+        });
+    });
 
     $(document).ready(function() {
         $('input[name="cat_all"]').on('click', function() {
@@ -203,8 +234,10 @@ $search = app()->request->search;
                 selectedCategories.push($(this).attr('id').split('_')[1]);
             });
 
+            mount('single', selectedCategories);
+
             // Perform any action with the selected categories
-            console.log(selectedCategories);
+            // console.log(selectedCategories);
         })
     })
 </script>
