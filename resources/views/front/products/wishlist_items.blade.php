@@ -48,7 +48,7 @@
                                     $stok_ready = ($item['product']['stock'] == null || $item['product']['stock'] < 1);
                                 @endphp
                                 <div class="d-flex justify-content-end {{ $stok_ready ? 'text-danger' : 'text-success' }}">
-                                    <i>{{ $stok_ready ? 'Stok Tidak Tersedia' : 'Stok Tersedia' }}</i>
+                                    <i>{{ $stok_ready ? 'Tidak Tersedia' : 'Tersedia' }}</i>
                                 </div>
                             </div>
                         </td>
