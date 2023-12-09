@@ -39,9 +39,10 @@ class ProductsController extends Controller
             $d->product_disc = Product::getDiscountAttributePrice($d->id);
         }
 
-        $productsListing = json_encode($productsListing);
-        $productsListing = json_decode($productsListing);
-        return view('front.products.listing')->with(compact('productsListing'));
+        $productsListing = json_decode(json_encode($productsListing));
+        $categories = Category::where('status', 1)->get();
+
+        return view('front.products.listing')->with(compact('productsListing', 'categories'));
     }
 
     public function getProduct()

@@ -12,16 +12,39 @@ $search = app()->request->search;
 <div class="page-style-a">
         <div class="container">
                     <div class="page-intro">
-                        <h2>Katalog Produk</h2>                
+                        <h2>Katalog Produk</h2>     
+                        @if(app()->request->filled('search'))      
+                        <h6>Hasil pencarian untuk kata kunci : <span class="text-primary">{{  app()->request->search }}</span></h6>
+                        @endif     
                     </div>
         </div>
     </div>
     <!-- Shop-Page -->
-    <div class="page-shop u-s-p-t-80">
+    <div class="page-shop ">
         <div class="container">
             <div class="row">
                 <!-- Shop-Left-Side-Bar-Wrapper -->
-                @include ('front.products.filters')
+                <div class="col-lg-3 col-md-3 col-sm-12 mt-5">
+                    <!-- Filter-Brand -->
+                    <div class="facet-filter-associates " >
+                        <h3 class="title-name">Pilih Kategori Produk</h3>
+                        <form class="facet-form" action="#" method="post">
+                            <div class="associate-wrapper">
+                                   <div class="form-group">
+                                    <input type="checkbox" class="check-box brand" name="cat_all" id="id_all" checked value="">
+                                    <label class="label-text" for="id_all">Semua Kategori</label>
+                                </div>
+                                @foreach ($categories as $item)
+                                <div class="form-group">
+                                    <input type="checkbox" class="check-box brand" name="categories" id="id_{{$item->id}}" value="">
+                                    <label class="label-text" for="id_{{$item->id}}">{{$item->category_name}}</label>
+                                </div>
+                                @endforeach
+                            </div>
+                        </form>
+                        <button class="btn btn-primary btn-sm mt-2 float-right"><i class="fa fa-filter"></i>Terapkan Filter</button>
+                    </div>
+                </div>
                 <!-- Shop-Left-Side-Bar-Wrapper /- -->
                 <!-- Shop-Right-Wrapper -->
                 <div class="col-lg-9 col-md-9 col-sm-12">
@@ -35,7 +58,7 @@ $search = app()->request->search;
                             <button class="btn btn-primary ml-1" onclick="search()">
                                 <i class="fa fa-search"></i>
                             </button>
-                            <div class="select-box-wrapper ml-2" style="width: 150px">
+                            {{-- <div class="select-box-wrapper ml-2" style="width: 150px">
                                 <label class="sr-only" for="show-records">Page </label>
                                 <select class=" form-control" id="show-records">
                                     <option selected="selected" value="">10</option>
@@ -43,7 +66,7 @@ $search = app()->request->search;
                                     <option value="">50</option>
                                     <option value="">100</option>
                                 </select>
-                            </div>
+                            </div> --}}
                         </div>
                         <!-- //end Toolbar Sorter 2  -->
                     </div>
@@ -146,5 +169,43 @@ $search = app()->request->search;
 
         window.location.href=searchUrl
     }
+
+    function mount(type, arr = null) {
+        if(type == 'all'){
+                const urlString = "{{url()->full()}}";
+
+                const url = new URL(urlString);
+                const searchParams = url.searchParams;
+
+                // Remove the 'cat_filter' parameter
+                searchParams.delete('cat_filter');
+
+                // Get the updated URL without 'cat_filter'
+                const updatedURL = url.origin + url.pathname + '?' + searchParams.toString();
+
+                console.log(updatedURL);
+        }
+    }
+
+    $(document).ready(function() {
+        $('input[name="cat_all"]').on('click', function() {
+            if(this.checked){
+                $('input[name="categories"]').prop('checked', false);
+                mount('all');
+            }
+        })
+        $('input[name="categories"]').on('click', function() {
+            if(this.checked){
+                $('input[name="cat_all"]').prop('checked', false);
+            }
+            let selectedCategories = [];
+            $('input[name="categories"]:checked').each(function() {
+                selectedCategories.push($(this).attr('id').split('_')[1]);
+            });
+
+            // Perform any action with the selected categories
+            console.log(selectedCategories);
+        })
+    })
 </script>
 @endsection
