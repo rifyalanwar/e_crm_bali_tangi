@@ -872,7 +872,7 @@ body {
       border: 1px solid #DCDCDD; }
 
 .check-box:checked + .label-text {
-  color: #d90429; }
+  color: #69409C; }
   .check-box:checked + .label-text:before {
     font-family: 'Font Awesome 5 Free';
     content: '\F00C';
@@ -890,7 +890,7 @@ body {
     padding: 0;
     color: #ffffff; }
   .check-box:checked + .label-text:after {
-    background-color: #d90429;
+    background-color: #69409C;
     border: none; }
 
 .check-box:checked + .no-color {
