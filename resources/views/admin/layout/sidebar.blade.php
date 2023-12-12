@@ -125,6 +125,16 @@
             </div>
         </li>
         <li class="nav-item">
+        <a @if(Session::get('page')=="users") style="background:#4B49AC !important; color: #fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-users" aria-expanded="false" aria-controls="ui-users">
+            <span class="menu-title">Pengaturan Pengguna</span>
+            </a>
+            <div class="collapse" id="ui-users">
+                <ul class="nav flex-column sub-menu" style="background: #fff !important; color: #4B49AC !important;">
+                    <li class="nav-item"> <a @if(Session::get('page')=="users") style="background:#4B49AC !important; color: #fff !important;" @else style="background:#fff !important; color: #4B49AC !important;" @endif class="nav-link" href="{{ url('admin/users') }}">Daftar Pengguna</a></li> 
+                </ul>
+            </div>
+        </li>       
+        <li class="nav-item">
         <a @if( Session::get('page')=="customer_reports") style="background:#4B49AC !important; color: #fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-reports" aria-expanded="false" aria-controls="ui-reports">
             <span class="menu-title">Laporan Pelanggan</span>
             </a>
@@ -133,7 +143,7 @@
                     <li class="nav-item"> <a @if(Session::get('page')=="customer_reports") style="background:#4B49AC !important; color: #fff !important;" @else style="background:#fff !important; color: #4B49AC !important;" @endif class="nav-link" href="{{ url('admin/customer-reports') }}">Tampilkan Laporan</a></li> 
                 </ul>
             </div>
-        </li>      
+        </li>   
         @endif
         @if(Auth::guard('admin')->user()->type=="Manajer")     
         <li class="nav-item">
