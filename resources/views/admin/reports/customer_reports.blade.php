@@ -31,6 +31,7 @@
                                         <th>Nama</th>                                    
                                         <th>E-mail</th>
                                         <th>No. Telepon</th>
+                                        <th>Agama</th>
                                         <th>Tanggal Lahir</th>
                                         @if(!$filter || $filter == 'all' || $filter == 'transaksi_terbanyak')
                                         <th>Jumlah Transaksi</th>
@@ -50,6 +51,7 @@
                                             <td>{{$d->name}}</td>
                                             <td>{{$d->email}}</td>
                                             <td>{{$d->mobile}}</td>
+                                            <td>{{$d->religion}}</td>
                                             <td>{{$d->birthdate}}</td>
                                             @if(!$filter || $filter == 'all' || $filter == 'transaksi_terbanyak')
                                                 <td class="text-center">{{$d->total_pembelian}}</td>
