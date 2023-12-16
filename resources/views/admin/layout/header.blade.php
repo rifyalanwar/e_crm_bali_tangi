@@ -7,6 +7,19 @@
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
         <span class="icon-menu"></span>
         </button>
+        <div class="btn-group ml-3">
+            @php 
+                $data = \DB::table('users')->whereMonth('birthdate', date('m'))->whereDay('birthdate', date('d'));
+            @endphp
+            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="ti-bell"></i> {{ $data->count() }}
+            </button>
+            <div class="dropdown-menu">
+                @foreach ($data->get() as $d)
+                    <a class="dropdown-item p-2" href="#"><b>{{ $d->name }}</b> berulang tahun hari ini 🎉</a>
+                @endforeach
+            </div>
+        </div>
         <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item nav-settings d-none d-lg-flex">
             <a href="{{ url('admin/logout') }}" class="dropdown-item">Logout</a>
