@@ -31,10 +31,10 @@
                                         <th>Nama</th>                                    
                                         <th>E-mail</th>
                                         <th>No. Telepon</th>
-                                        <th>Alamat</th>
+                                        <th>Agama</th>
                                         <th>Tanggal Lahir</th>
                                         @if(!$filter || $filter == 'all' || $filter == 'transaksi_terbanyak')
-                                        <th>Jml Transaksi</th>
+                                        <th>Jumlah Transaksi</th>
                                         @endif
                                         @if(!$filter || $filter == 'all' || $filter == 'belanja_terbanyak')
                                         <th>Total Belanja</th>
@@ -51,13 +51,13 @@
                                             <td>{{$d->name}}</td>
                                             <td>{{$d->email}}</td>
                                             <td>{{$d->mobile}}</td>
-                                            <td>{{$d->address}}</td>
+                                            <td>{{$d->religion}}</td>
                                             <td>{{$d->birthdate}}</td>
                                             @if(!$filter || $filter == 'all' || $filter == 'transaksi_terbanyak')
-                                                <td class="text-right">{{$d->total_pembelian}}</td>
+                                                <td class="text-center">{{$d->total_pembelian}}</td>
                                             @endif
                                             @if(!$filter || $filter == 'all' || $filter == 'belanja_terbanyak')
-                                                <td class="text-right">{{formatRupiah(@$d->total_belanja ?? 0)}}</td>
+                                                <td class="text-center">{{formatRupiah(@$d->total_belanja ?? 0)}}</td>
                                             @endif
                                             @if(!$filter || $filter == 'all' || $filter == 'pelanggan_lama')
                                                 <td>{{$d->tgl_pembelian_trkhr}}</td>

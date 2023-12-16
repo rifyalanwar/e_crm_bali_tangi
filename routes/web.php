@@ -100,6 +100,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
         //Newsletters
         Route::get('newsletters', 'NewslettersController@newsletters');
+        
+        //Live Chats        
+        Route::get('live-chats','ChatsController@chats');
 
         //Orders
         Route::get('orders', 'OrdersController@orders');

@@ -42,7 +42,7 @@ class ReportsController extends Controller
 
     public function transactionReports()
     {
-        \Session::put('page', 'transaction_reports');
+        Session::put('page', 'transaction_reports');
 
         return view('admin.reports.transaction_reports');
     }

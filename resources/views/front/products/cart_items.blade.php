@@ -5,8 +5,8 @@
     <table>
         <thead>
             <tr>
-                <th class="text-center">Produk</th>
-                <th class="text-center">Harga</th>
+                <th class="text-left">Produk</th>
+                <th class="text-left">Harga</th>
                 <th class="text-center">Jumlah</th>
                 <th class="text-center">Subtotal</th>
                 <th class="text-center">Aksi</th>
@@ -18,7 +18,7 @@
             <?php $getDiscountAttributePrice = Product::getDiscountAttributePrice($item['product_id'],$item['size']);
             ?>
             <tr>
-                <td class="text-center">
+                <td class="text-left">
                     <div class="cart-anchor-image">
                         <a href="{{ url('produk/'.$item['product_id'])}}">
                             <img src="{{ asset('front/images/product_images/small/'.$item['product']['product_image']) }}" alt="Product">
