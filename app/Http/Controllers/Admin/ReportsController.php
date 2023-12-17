@@ -36,7 +36,7 @@ class ReportsController extends Controller
                 (select DATE_FORMAT(ss.created_at, '%d-%m-%Y') from orders ss where ss.user_id = u.id $addSql order by ss.id desc limit 1) as tgl_pembelian_trkhr,
                 u.*, 
                 DATE_FORMAT(u.birthdate, '%d-%m-%Y') birthdate
-            ")->limit(5)->get();
+            ")->limit(10)->get();
         return view('admin.reports.customer_reports', compact('data'));
     }
 

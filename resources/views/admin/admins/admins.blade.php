@@ -64,7 +64,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="javascript:void(0)" class="confirmDelete" module="user" moduleid="{{ $admin['id'] }}"><i style="font-size:25px;" class="mdi mdi-file-excel-box"></i></a>
+                                            <a href="javascript:void(0)" class="confirmDelete" module="admin" moduleid="{{ $admin['id'] }}"><i style="font-size:25px;" class="mdi mdi-file-excel-box"></i></a>
                                         </td>
                                     </tr>
                                    @endforeach 

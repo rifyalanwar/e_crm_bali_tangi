@@ -14,7 +14,7 @@
             <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="ti-bell"></i> {{ $data->count() }}
             </button>
-            <div class="dropdown-menu">
+            <div class="dropdown-menu">                
                 @foreach ($data->get() as $d)
                     <a class="dropdown-item p-2" href="#"><b>{{ $d->name }}</b> berulang tahun hari ini 🎉</a>
                 @endforeach

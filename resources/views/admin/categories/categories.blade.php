@@ -19,8 +19,8 @@
                         Add class <code>.table-bordered</code>
                         </p> -->
                         <a style="max-width: 150px; float: right; display: inline-block;" href="{{ url('admin/add-edit-category') }}" class="btn btn-block btn-primary">Tambah Kategori</a>                       
-                        <div class="table-responsive pt-3">
-                            <table id="categories" class="table table-bordered">
+                    <div class="table-responsive pt-3">
+                            <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>

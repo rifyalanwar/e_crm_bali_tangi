@@ -37,7 +37,7 @@
                   
                   <form class="forms-sample" action="{{ url('admin/update-admin-password') }}" method="post">@csrf
                     <div class="form-group">
-                      <label>E-mail admin/</label>
+                      <label>E-mail admin</label>
                       <input class="form-control" value="{{ $adminDetails['email'] }}" readonly="">
                     </div>
                     <div class="form-group">
